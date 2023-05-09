@@ -39,8 +39,8 @@ async def get_todo():
     response = await fetch_all_todos()
     return response
 
-@app.get("/api/todo/{title}", response_model=Todo)
-async def get_todo_by_title(title):
+@app.get("/api/todo/{title: str}", response_model=Todo)
+async def get_todo_by_title(title: str):
     response = await fetch_one_todo(title)
     if response:
         return response
@@ -53,15 +53,15 @@ async def post_todo(todo: Todo):
         return response
     raise HTTPException(400, "Something went wrong")
 
-@app.put("/api/todo/{title}", response_model=Todo)
+@app.put("/api/todo/{title: str}", response_model=Todo)
 async def put_todo(title: str, desc: str):
     response = await update_todo(title, desc)
     if response:
         return response
     raise HTTPException(404, f"There is no todo with the title {title}")
 
-@app.delete("/api/todo/{title}")
-async def delete_todo(title):
+@app.delete("/api/todo/{title:str}")
+async def delete_todo(title: str):
     response = await remove_todo(title)
     if response:
         return "Successfully deleted todo"
